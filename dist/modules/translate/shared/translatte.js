@@ -2,10 +2,18 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-Object.defineProperty(exports, "translatte", {
-    enumerable: true,
-    get: function() {
+function _export(target, all) {
+    for(var name in all)Object.defineProperty(target, name, {
+        enumerable: true,
+        get: all[name]
+    });
+}
+_export(exports, {
+    translatte: function() {
         return translatte;
+    },
+    translatte1: function() {
+        return translatte1;
     }
 });
 const _axios = /*#__PURE__*/ _interop_require_default(require("axios"));
@@ -14,7 +22,7 @@ function _interop_require_default(obj) {
         default: obj
     };
 }
-const translatte = async ({ text, from, to })=>{
+const translatte1 = async ({ text, from, to })=>{
     const baseURL = 'https://www2.deepl.com';
     const urlMethod = 'LMT_handle_texts';
     const urlFull = `${baseURL}/jsonrpc?client=chrome-extension,1.28.0&method=${encodeURIComponent(urlMethod)}`;
@@ -59,6 +67,58 @@ const translatte = async ({ text, from, to })=>{
         }
         throw new Error('Erro ao traduzir texto.');
     }
+};
+const translatte = async ({ text, from, to })=>{
+    const payload = {
+        jsonrpc: '2.0',
+        method: 'LMT_handle_jobs',
+        params: {
+            jobs: [
+                {
+                    kind: 'default',
+                    sentences: [
+                        {
+                            text: text,
+                            id: 1,
+                            prefix: ''
+                        }
+                    ],
+                    raw_en_context_before: [],
+                    raw_en_context_after: [],
+                    preferred_num_beams: 4
+                }
+            ],
+            lang: {
+                target_lang: from,
+                preference: {
+                    weight: {},
+                    default: 'default'
+                },
+                source_lang_computed: to
+            },
+            priority: -1,
+            commonJobParams: {
+                quality: 'fast',
+                mode: 'translate',
+                browserType: 1,
+                textType: 'plaintext'
+            },
+            timestamp: Date.now()
+        },
+        id: Math.floor(Math.random() * 1e8)
+    };
+    const response = await fetch('https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+            Referer: `https://www.deepl.com/translator#${from}/${to}/${encodeURIComponent(text)}`
+        },
+        body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    console.log(data);
+    return 'ok';
 };
 
 //# sourceMappingURL=translatte.js.map
