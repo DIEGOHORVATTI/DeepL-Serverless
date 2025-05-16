@@ -9,7 +9,7 @@ Object.defineProperty(exports, "translatte", {
     }
 });
 const translatte = async ({ text, from, to })=>{
-    return '';
+    return 'ola';
 };
 
 //# sourceMappingURL=translatte.js.map

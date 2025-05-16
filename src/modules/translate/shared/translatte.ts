@@ -17,5 +17,5 @@ export type TranslationOptions = {
  * @example translatte({ text: 'teste de parametros por colchetes {{notTraduction}}', to: 'en', from: 'pt-br' })
  */
 export const translatte = async ({ text, from, to }: TranslationOptions): Promise<string> => {
-  return ''
+  return 'ola'
 }
