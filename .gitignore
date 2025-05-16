@@ -1,22 +1,8 @@
-# git
-.git/
-
-# backup
-*.bak
-src/translate_old.js
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
-
+# Dependency directories
 node_modules/
 
-yarn.lock
-package-lock.json
-
+# Environment variables
 .env
+.vscode
+
+.dist/
